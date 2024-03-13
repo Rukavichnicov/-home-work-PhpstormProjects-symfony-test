@@ -1,0 +1,53 @@
+version: '3'
+
+services:
+  db:
+    image: postgres:16.2
+    environment:
+      POSTGRES_USER: 'symfony'
+      POSTGRES_DB: 'symfony'
+      POSTGRES_PASSWORD: 'symfony_pass'
+      PGDATA: /var/lib/postgresql/data/pgdata
+    volumes:
+      - db_data_symfony_test:/var/lib/postgresql/data/pgdata
+      - ./docker/postgres/dumps:/dumps #директория для хранения дампов
+    ports:
+      - 54321:5432
+    networks:
+      - symfony-net
+
+  php:
+    build:
+      context: docker/php
+      dockerfile: Dockerfile # относительно директории контекста
+    working_dir: /var/www
+    environment:
+      PHP_IDE_CONFIG: 'serverName=symfonylocal'
+    user: "1000:1000"
+    volumes:
+      - ./:/var/www
+      - ./docker/php/php.ini:/usr/local/etc/php/conf.d/custom.ini
+    depends_on:
+      - db
+    networks:
+      - symfony-net
+
+  nginx:
+    image: nginx:1.25
+    ports:
+      - 80:80
+    working_dir: /var/www
+    volumes:
+      - ./:/var/www/
+      - ./docker/nginx/conf.d/:/etc/nginx/conf.d/
+      - ./docker/nginx/logs:/var/log/nginx
+    depends_on:
+      - php
+    networks:
+      - symfony-net
+
+volumes:
+  db_data_symfony_test:
+
+networks:
+  symfony-net:
