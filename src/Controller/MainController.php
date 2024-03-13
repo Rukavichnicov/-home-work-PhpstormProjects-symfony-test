@@ -8,7 +8,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class MainController
 {
     #[Route('/', name: 'homepage')]
-    public function number(): Response
+    public function index(): Response
     {
         return new Response(<<<EOF
             <html>
