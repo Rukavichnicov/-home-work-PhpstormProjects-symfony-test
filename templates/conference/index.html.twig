@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Гостевая книга конференций{% endblock %}
+
+{% block body %}
+    <h2>Вот ваши отзывы!</h2>
+
+    {% for conference in conferences %}
+        <h4><a href="{{ path('conference', { id: conference.id }) }}">{{ conference }}</a></h4>
+    {% endfor %}
+{% endblock %}
