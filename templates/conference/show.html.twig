@@ -24,10 +24,10 @@
         <div>У конференции нет комментариев</div>
     {% endif %}
     {% if previous >= 0 %}
-        <a href="{{ path('conference', { id: conference.id, offset: previous }) }}">Назад</a>
+        <a href="{{ path('conference', { slug: conference.slug, offset: previous }) }}">Назад</a>
     {% endif %}
     {% if next < comments|length %}
-        <a href="{{ path('conference', { id: conference.id, offset: next }) }}">Вперед</a>
+        <a href="{{ path('conference', { slug: conference.slug, offset: next }) }}">Вперед</a>
     {% endif %}
     <p>
         <a href="{{ path('homepage')}}">На главную</a>
