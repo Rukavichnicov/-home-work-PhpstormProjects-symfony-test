@@ -23,6 +23,11 @@
     {% else %}
         <div>У конференции нет комментариев</div>
     {% endif %}
+
+    <h2>Укажите ваше мнение:</h2>
+
+    {{ form(comment_form) }}
+
     {% if previous >= 0 %}
         <a href="{{ path('conference', { slug: conference.slug, offset: previous }) }}">Назад</a>
     {% endif %}
